@@ -9,11 +9,9 @@
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <style>
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
+        #map {
+            width: 603px;
+            height: 501px;
         }
         </style>
         <title></title>
@@ -30,51 +28,35 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="data/_1.js"></script>
-        <script src="data/_2.js"></script>
+        <script src="data/Nakonsawan_PV_1.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        })
+        }).fitBounds([[14.850223189710588,99.0108217061948],[16.394290425886478,100.92699213781843]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
-            if (bounds_group.getLayers().length) {
-                map.fitBounds(bounds_group.getBounds());
-            }
         }
-        map.createPane('pane_streetmap_0');
-        map.getPane('pane_streetmap_0').style.zIndex = 400;
-        var layer_streetmap_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            pane: 'pane_streetmap_0',
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
             opacity: 1.0,
             attribution: '',
             minZoom: 1,
             maxZoom: 28,
             minNativeZoom: 0,
-            maxNativeZoom: 18
+            maxNativeZoom: 19
         });
-        layer_streetmap_0;
-        map.addLayer(layer_streetmap_0);
-        function pop__1(feature, layer) {
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_Nakonsawan_PV_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['FID_ขอบเขต'] !== null ? autolinker.link(feature.properties['FID_ขอบเขต'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_IDN'] !== null ? autolinker.link(feature.properties['AP_IDN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_CODE'] !== null ? autolinker.link(feature.properties['AP_CODE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_TN'] !== null ? autolinker.link(feature.properties['AP_TN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_EN'] !== null ? autolinker.link(feature.properties['AP_EN'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['PV_IDN'] !== null ? autolinker.link(feature.properties['PV_IDN'].toLocaleString()) : '') + '</td>\
@@ -101,199 +83,47 @@
                         <td colspan="2">' + (feature.properties['ADMIN_TYPE'] !== null ? autolinker.link(feature.properties['ADMIN_TYPE'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['FID_พื้นที'] !== null ? autolinker.link(feature.properties['FID_พื้นที'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['GRIDCODE'] !== null ? autolinker.link(feature.properties['GRIDCODE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Sq_Km'] !== null ? autolinker.link(feature.properties['Sq_Km'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ระดับ'] !== null ? autolinker.link(feature.properties['ระดับ'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Rai'] !== null ? autolinker.link(feature.properties['Rai'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style__1_0(feature) {
-            switch(String(feature.properties['ระดับ'])) {
-                case 'พื้นที่เสี่ยงอุทกภัยต่ำ':
-                    return {
-                pane: 'pane__1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(247,251,255,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'พื้นที่เสี่ยงอุทกภัยปานกลาง':
-                    return {
-                pane: 'pane__1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(200,221,240,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'พื้นที่เสี่ยงอุทกภัยสูง':
-                    return {
-                pane: 'pane__1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(115,179,216,1.0)',
-                interactive: true,
-            }
-                    break;
-                case 'พื้นที่เสี่ยงอุทกภัยสูงสุด':
-                    return {
-                pane: 'pane__1',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(40,121,185,1.0)',
-                interactive: true,
-            }
-                    break;
-            }
-        }
-        map.createPane('pane__1');
-        map.getPane('pane__1').style.zIndex = 401;
-        map.getPane('pane__1').style['mix-blend-mode'] = 'normal';
-        var layer__1 = new L.geoJson(json__1, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json__1',
-            layerName: 'layer__1',
-            pane: 'pane__1',
-            onEachFeature: pop__1,
-            style: style__1_0,
-        });
-        bounds_group.addLayer(layer__1);
-        map.addLayer(layer__1);
-        function pop__2(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_IDN'] !== null ? autolinker.link(feature.properties['AP_IDN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_CODE'] !== null ? autolinker.link(feature.properties['AP_CODE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_TN'] !== null ? autolinker.link(feature.properties['AP_TN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AP_EN'] !== null ? autolinker.link(feature.properties['AP_EN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PV_IDN'] !== null ? autolinker.link(feature.properties['PV_IDN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PV_CODE'] !== null ? autolinker.link(feature.properties['PV_CODE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PV_TN'] !== null ? autolinker.link(feature.properties['PV_TN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PV_EN'] !== null ? autolinker.link(feature.properties['PV_EN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['RE_NESDB'] !== null ? autolinker.link(feature.properties['RE_NESDB'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['RE_ROYIN'] !== null ? autolinker.link(feature.properties['RE_ROYIN'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['AreaShape'] !== null ? autolinker.link(feature.properties['AreaShape'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ADMIN_TYPE'] !== null ? autolinker.link(feature.properties['ADMIN_TYPE'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style__2_0() {
+        function style_Nakonsawan_PV_1_0() {
             return {
-                pane: 'pane__2',
+                pane: 'pane_Nakonsawan_PV_1',
                 opacity: 1,
-                color: 'rgba(0,0,0,1.0)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,158,23,0.0)',
+                fillColor: 'rgba(231,113,72,1.0)',
                 interactive: true,
             }
         }
-        map.createPane('pane__2');
-        map.getPane('pane__2').style.zIndex = 402;
-        map.getPane('pane__2').style['mix-blend-mode'] = 'normal';
-        var layer__2 = new L.geoJson(json__2, {
+        map.createPane('pane_Nakonsawan_PV_1');
+        map.getPane('pane_Nakonsawan_PV_1').style.zIndex = 401;
+        map.getPane('pane_Nakonsawan_PV_1').style['mix-blend-mode'] = 'normal';
+        var layer_Nakonsawan_PV_1 = new L.geoJson(json_Nakonsawan_PV_1, {
             attribution: '',
             interactive: true,
-            dataVar: 'json__2',
-            layerName: 'layer__2',
-            pane: 'pane__2',
-            onEachFeature: pop__2,
-            style: style__2_0,
+            dataVar: 'json_Nakonsawan_PV_1',
+            layerName: 'layer_Nakonsawan_PV_1',
+            pane: 'pane_Nakonsawan_PV_1',
+            onEachFeature: pop_Nakonsawan_PV_1,
+            style: style_Nakonsawan_PV_1_0,
         });
-        bounds_group.addLayer(layer__2);
-        map.addLayer(layer__2);
+        bounds_group.addLayer(layer_Nakonsawan_PV_1);
+        map.addLayer(layer_Nakonsawan_PV_1);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/_2.png" /> ขอบเขตอำเภอจังหวัดนครสวรรค์': layer__2,'พื้นที่เสี่ยงอุทกภัยรายอำเภอ<br /><table><tr><td style="text-align: center;"><img src="legend/_1_พนทเสยงอทกภยตำ0.png" /></td><td>พื้นที่เสี่ยงอุทกภัยต่ำ</td></tr><tr><td style="text-align: center;"><img src="legend/_1_พนทเสยงอทกภยปานกลาง1.png" /></td><td>พื้นที่เสี่ยงอุทกภัยปานกลาง</td></tr><tr><td style="text-align: center;"><img src="legend/_1_พนทเสยงอทกภยสง2.png" /></td><td>พื้นที่เสี่ยงอุทกภัยสูง</td></tr><tr><td style="text-align: center;"><img src="legend/_1_พนทเสยงอทกภยสงสด3.png" /></td><td>พื้นที่เสี่ยงอุทกภัยสูงสุด</td></tr></table>': layer__1,"streetmap": layer_streetmap_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/Nakonsawan_PV_1.png" /> Nakonsawan_PV': layer_Nakonsawan_PV_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
         setBounds();
-        var i = 0;
-        layer__2.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['AP_TN'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['AP_TN']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css__2'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
-        resetLabels([layer__2]);
-        map.on("zoomend", function(){
-            resetLabels([layer__2]);
-        });
-        map.on("layeradd", function(){
-            resetLabels([layer__2]);
-        });
-        map.on("layerremove", function(){
-            resetLabels([layer__2]);
-        });
         </script>
     </body>
 </html>
