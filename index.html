@@ -251,7 +251,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(255,158,23,0.0)',
-                interactive: false,
+                interactive: true,
             }
         }
         map.createPane('pane__2');
@@ -259,7 +259,7 @@
         map.getPane('pane__2').style['mix-blend-mode'] = 'normal';
         var layer__2 = new L.geoJson(json__2, {
             attribution: '',
-            interactive: false,
+            interactive: true,
             dataVar: 'json__2',
             layerName: 'layer__2',
             pane: 'pane__2',
